@@ -5,34 +5,6 @@ using namespace std;
 void stock::create()
 {
     head = NULL;
-    char *filename = "input.txt";
-    FILE *filePtr;
-
-    if (!(filePtr = fopen(filename, "r")))
-    {
-        cerr << "File could not be opened" << endl;
-        exit(1);
-    }
-
-    fseek(filePtr, 0, SEEK_SET);
-
-    while (!feof(filePtr))
-    {
-        int size;
-        fscanf(filePtr, "%d", &size);
-        if (size == 0)
-        {
-            current_stock();
-        }
-        else if (size > 0)
-        {
-            add_stock(size);
-        }
-        else if (size < 0)
-        {
-            sell(size);
-        }
-    }
 }
 
 void stock::add_stock(int size)
@@ -161,10 +133,40 @@ void stock::clear()
     }
 }
 
-int main()
+int main(int argc, char *argv[])
 {
     stock s;
     s.create();
+
+    char *filename = argv[1];
+    FILE *filePtr;
+
+    if (!(filePtr = fopen(filename, "r")))
+    {
+        cerr << "File could not be opened" << endl;
+        exit(1);
+    }
+
+    while (!feof(filePtr))
+    {
+        int size;
+        fscanf(filePtr, "%d", &size);
+        if (size == 0)
+        {
+            s.current_stock();
+        }
+        else if (size > 0)
+        {
+            s.add_stock(size);
+        }
+        else if (size < 0)
+        {
+            s.sell(size);
+        }
+    }
+
     s.clear();
+    fclose(filePtr);
+
     return 0;
 }
