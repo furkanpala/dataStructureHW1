@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdio.h>
 #include "stock.h"
 using namespace std;
 
@@ -69,6 +70,9 @@ void stock::add_stock(int size)
     }
 }
 
+/*
+Prints the current stock when 0 is seen in file.
+*/
 void stock::current_stock()
 {
     node *traverse;
@@ -85,9 +89,9 @@ void stock::sell(int size)
     node *traverse1, *traverse2;
     traverse1 = head;
     traverse2 = traverse1;
-    int toBeSelled = abs(size);
+    int toBeSold = abs(size);
 
-    while (traverse2 && traverse2->size != toBeSelled)
+    while (traverse2 && traverse2->size != toBeSold)
     {
         traverse1 = traverse2;
         traverse2 = traverse2->next;
